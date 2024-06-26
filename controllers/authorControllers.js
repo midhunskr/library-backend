@@ -1,13 +1,25 @@
-const getAllAuthors = (req, res) => {
-    res.send('Got GET request to fetch all Categories.')
+const Author = require("../model/authorModel")
+
+const getAllAuthors = async (req, res) => {
+    const authors = await Author.find({})
+    res.json(authors)
 }
 
-const getAuthorById = (req, res) => {
-    res.send('Got GET request to fetch a Author.')
+const getAuthorById = async (req, res) => {
+    try{
+        const author = await Author.findById(req.params.authorId).exec()
+        res.status(200).json(author)
+    }
+    catch(error){
+        res.status(404).json('Author not found!')
+    }
 }
 
-const addNewAuthor = (req, res) => {
-    res.send('Got POST request to add a Author.')
+const addNewAuthor = async (req, res) => {
+    const authorData = req.body
+    const newAuthor = new Author(authorData)
+    await newAuthor.save()
+    res.status(201).json(newAuthor)
 }
 
 const updateAuthor = (req, res) => {

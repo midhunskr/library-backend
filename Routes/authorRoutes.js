@@ -4,6 +4,7 @@ const router = express.Router()
 
 // 1.Get all authors.
 router.get('/', getAllAuthors)
+
 // 2. Get a author by ID.
 router.get('/:authorId', getAuthorById)
 
